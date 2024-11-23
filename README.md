@@ -36,3 +36,7 @@ As stated in the README of the [original repository](https://github.com/N-R-K/Ch
 # Origin of Chibihash64
 
 The implementation for the hash function was written by N-R-K and can be found [here](https://github.com/N-R-K/ChibiHash)
+
+# Bugs 
+
+Please open an issue if you encounter any bugs as this crate makes use of unsafe Rust by its nature.
