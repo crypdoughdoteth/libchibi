@@ -9,5 +9,14 @@ libc = "0.2.164"
 [build-dependencies]
 cc = "1.0"
 
-[lib]
-crate-type = ["staticlib"]
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[build]
+opt-level = 3            
+lto = true
+rustflags = ["-C", "target-f=+crt-static"]
+
