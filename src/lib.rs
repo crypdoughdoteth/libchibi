@@ -6,6 +6,22 @@ extern "C" {
     fn chibihash64(keyIn: *const c_void, len: ptrdiff_t, seed: u64) -> u64;
 }
 
+/// ```rust
+/// use libchibi::hash;
+/// use std::hash::Hasher;
+///
+/// let mut chibi = Chibihash::new(42);
+/// chibi.write(b"Vyper");
+/// chibi.write(b"GM");
+/// let hash = chibi.finish();
+/// println!("{hash:?}");
+///
+///  // Basic interface
+/// let chibi = Chibihash::new(42);
+/// let hash = chibi.hash(b"GM");
+/// println!("{hash:?}");
+
+/// ```
 pub struct Chibihash {
     seed: u64,
     buffer: Vec<u8>,
@@ -35,7 +51,6 @@ impl Chibihash {
     }
 
     pub fn hash(&self, key: &[u8]) -> Hash {
-        println!("{}", std::mem::size_of_val(&key));
         unsafe {
             let res = chibihash64(
                 key.as_ptr() as *const c_void,
@@ -47,7 +62,7 @@ impl Chibihash {
     }
 }
 
-#[repr(C)]
+#[derive(Debug)]
 pub struct Hash(u64);
 
 #[cfg(test)]
@@ -69,5 +84,19 @@ pub mod test {
             assert_eq!(res, 1977729916931055241);
             let _ = Box::from_raw(seed_ptr);
         };
+    }
+
+    #[test]
+    fn doc_test() {
+        let mut chibi = Chibihash::new(42);
+        chibi.write(b"Vyper");
+        chibi.write(b"GM");
+        let hash = chibi.finish();
+        println!("{hash:?}");
+
+        // Basic interface
+        let chibi = Chibihash::new(42);
+        let hash = chibi.hash(b"GM");
+        println!("{hash:?}");
     }
 }
