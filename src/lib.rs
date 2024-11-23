@@ -26,6 +26,7 @@ extern "C" {
 /// let hash = chibi.hash(b"GM");
 /// println!("{hash:?}");
 /// ```
+#[derive(Debug, Clone)]
 pub struct Chibihash {
     seed: u64,
     buffer: Vec<u8>,
