@@ -5,6 +5,9 @@ and integrate with the Rust standard library's `Hasher` trait.
 
 # Usage
 
+To add as a dependency to your Rust project, run `cargo add libchibi` 
+or add `libchibi = "0.1.0"` to your cargo.toml
+
 ```rust 
 use std::hash::Hasher;
 use libchibi::Chibihash;
