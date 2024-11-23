@@ -6,7 +6,6 @@ and integrate with the Rust standard library's `Hasher` trait.
 # Usage
 
 ```rust 
-use libchibi::hash;
 use std::hash::Hasher;
 
 let mut chibi = Chibihash::new(42);
