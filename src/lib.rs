@@ -42,7 +42,14 @@ impl Hasher for Chibihash {
 }
 
 impl Chibihash {
+    /// Chibihash is non-CRHF that is initialized with a seed value. By default the buffer capacity is 1024.
     pub fn new(seed: u32) -> Self {
+        Self::with_capcity(seed, 1024)
+    }
+
+    /// Sets the internal buffer's capacity to `capacity`. This is primarily good for being conservative with
+    /// the size of your allocations in constrained environments.
+    pub fn with_capcity(seed: u32, capacity: usize) -> Self {
         unsafe {
             let seed_ptr = malloc(size_of::<c_uint>()) as *mut c_uint;
             *seed_ptr = seed;
@@ -50,7 +57,7 @@ impl Chibihash {
             free(seed_ptr as *mut c_void);
             Chibihash {
                 seed,
-                buffer: Vec::with_capacity(1024),
+                buffer: Vec::with_capacity(capacity),
             }
         }
     }
@@ -67,8 +74,26 @@ impl Chibihash {
     }
 }
 
-#[derive(Debug)]
-pub struct Hash(u64);
+#[derive(Debug, Copy, Clone, Eq, PartialEq, PartialOrd, Ord)]
+pub struct Hash(pub u64);
+
+impl Hash {
+    pub fn to_be_bytes(&self) -> [u8; 8] {
+        self.0.to_be_bytes()
+    }
+
+    pub fn to_le_bytes(&self) -> [u8; 8] {
+        self.0.to_le_bytes()
+    }
+
+    pub fn to_ne_bytes(&self) -> [u8; 8] {
+        self.0.to_ne_bytes()
+    }
+
+    pub fn as_u64(&self) -> u64 {
+        self.0
+    }
+}
 
 #[cfg(test)]
 pub mod test {
