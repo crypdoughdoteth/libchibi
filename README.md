@@ -7,6 +7,7 @@ and integrate with the Rust standard library's `Hasher` trait.
 
 ```rust 
 use std::hash::Hasher;
+use libchibi::Chibihash;
 
 let mut chibi = Chibihash::new(42);
 chibi.write(b"Vyper");
@@ -22,7 +23,7 @@ println!("{hash:?}");
 
 # When Not To Use
 
-As stated in the README of the (original repository)[https://github.com/N-R-K/ChibiHash],
+As stated in the README of the [original repository](https://github.com/N-R-K/ChibiHash),
 
 >The introduction should make it clear on why you'd want to use this. Here are some reasons to avoid using this:
 >
@@ -34,4 +35,4 @@ As stated in the README of the (original repository)[https://github.com/N-R-K/Ch
 
 # Origin of Chibihash64
 
-The implementation for the hash function was written by N-R-K and can be found (here)[https://github.com/N-R-K/ChibiHash]
+The implementation for the hash function was written by N-R-K and can be found [here](https://github.com/N-R-K/ChibiHash)
